@@ -19,6 +19,7 @@ class ProductRepoImpl(private val httpClient: HttpClient) : ProductRepo {
 
     override suspend fun getProducts(): List<Products> {
         return httpClient.get("${Constants.BASE_URL}/products")
+//        return httpClient.get("${Constants.BASE_URL}/products?size=100")
             .body<ProductsResponseDTO>()
             ._embedded
             .products
