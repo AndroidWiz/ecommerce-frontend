@@ -30,14 +30,14 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -48,7 +48,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         all {
             languageSettings {
@@ -56,7 +56,7 @@ kotlin {
                 optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
             }
         }
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(compose.uiTooling)
@@ -102,6 +102,9 @@ kotlin {
 
             // toaster
             implementation(libs.sonner)
+
+            // log
+            implementation("io.github.aakira:napier:2.7.1")
         }
         iosMain.dependencies {
             // ktor

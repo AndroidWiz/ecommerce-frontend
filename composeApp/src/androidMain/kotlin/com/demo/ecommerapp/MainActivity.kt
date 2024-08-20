@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.koin.dsl.module
 
 class MainActivity : ComponentActivity() {
@@ -34,6 +36,7 @@ class BaseApplication() : Application() {
             it.modules(
                 module {
                     single { this@BaseApplication }
+                    Napier.base(DebugAntilog())
                 }
             )
         }
