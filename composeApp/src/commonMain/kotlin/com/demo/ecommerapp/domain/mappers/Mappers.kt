@@ -1,19 +1,28 @@
 package com.demo.ecommerapp.domain.mappers
 
-import com.demo.ecommerapp.data.model.ProductsDTO
+import com.demo.ecommerapp.data.model.*
 import com.demo.ecommerapp.data.utils.Constants
+import com.demo.ecommerapp.domain.model.ProductDetails
 import com.demo.ecommerapp.domain.model.Products
 
 fun List<ProductsDTO>.toDomain(): List<Products> = map {
     Products(
-//        id = it.id,
-        sku = it.sku,
+        id = it.id,
         name = it.name,
-        description = it.description,
         unitPrice = it.unitPrice,
-//        imageUrl = it.imageUrl,
         imageUrl = "${Constants.IMAGE_URL_PREFIX}${it.imageUrl}",
-        active = it.active,
-        unitsInStock = it.unitsInStock,
+    )
+}
+
+fun ProductsDTO.toDomain(): ProductDetails {
+    return ProductDetails(
+        id = this.id,
+        sku = this.sku,
+        name = this.name,
+        description = this.description,
+        unitPrice = this.unitPrice,
+        imageUrl = "${Constants.IMAGE_URL_PREFIX}${this.imageUrl}",
+        active = this.active,
+        unitsInStock = this.unitsInStock
     )
 }

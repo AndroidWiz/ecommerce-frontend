@@ -4,6 +4,7 @@ import com.demo.ecommerapp.data.model.ProductsDTO
 import com.demo.ecommerapp.data.model.ProductsResponseDTO
 import com.demo.ecommerapp.data.utils.Constants
 import com.demo.ecommerapp.domain.mappers.toDomain
+import com.demo.ecommerapp.domain.model.ProductDetails
 import com.demo.ecommerapp.domain.model.Products
 import com.demo.ecommerapp.domain.repo.ProductRepo
 import io.ktor.client.HttpClient
@@ -23,6 +24,11 @@ class ProductRepoImpl(private val httpClient: HttpClient) : ProductRepo {
             .body<ProductsResponseDTO>()
             ._embedded
             .products
+            .toDomain()
+    }
+
+    override suspend fun getProductDetails(id: Long): ProductDetails {
+        return httpClient.get("${Constants.BASE_URL}/products/${id}").body<ProductsDTO>()
             .toDomain()
     }
 }

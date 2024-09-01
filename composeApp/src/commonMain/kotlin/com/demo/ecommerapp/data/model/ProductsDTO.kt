@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProductsDTO(
-//    val id: Long,
+    val id: Long,
     val sku: String,
     val name: String,
     val description: String,
@@ -19,10 +19,10 @@ data class ProductsDTO(
 
 @Serializable
 data class ProductsResponseDTO(
-    val _embedded: EmbeddedProductsDTO
+    val _embedded: EmbeddedProductsDTO,
 )
 
 @Serializable
 data class EmbeddedProductsDTO(
-    val products: List<ProductsDTO>
+    val products: List<ProductsDTO>,
 )
