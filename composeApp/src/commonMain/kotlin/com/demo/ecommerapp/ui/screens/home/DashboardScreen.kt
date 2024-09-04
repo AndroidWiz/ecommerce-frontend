@@ -110,9 +110,11 @@ fun DashboardScreen(
                 // home screen
                 scene(route = BottomNavigationRoute.Home.route) {
                     currentRoute = BottomNavigationRoute.Home.route
-                    val viewModel: ProductsListViewModel = koinViewModel(ProductsListViewModel::class)
+                    val productViewModel: ProductsListViewModel = koinViewModel(ProductsListViewModel::class)
+                    val categoryViewModel: CategoriesListViewModel = koinViewModel(CategoriesListViewModel::class)
                     HomeScreen(
-                        viewModel = viewModel,
+                        productViewModel = productViewModel,
+                        categoryViewModel = categoryViewModel,
                         navigator = navigator,
                         modifier = Modifier,
                         onProductItemClick = {

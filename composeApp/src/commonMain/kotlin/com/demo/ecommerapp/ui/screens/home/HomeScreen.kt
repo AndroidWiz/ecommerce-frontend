@@ -12,10 +12,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import coil3.compose.LocalPlatformContext
+import com.demo.ecommerapp.ui.components.CategoryListView
 import com.demo.ecommerapp.ui.components.ProductsListView
+import com.demo.ecommerapp.ui.screens.categories.CategoriesListStateHolder
+import com.demo.ecommerapp.ui.screens.categories.CategoriesListViewModel
 import com.demo.ecommerapp.ui.screens.products_list.ProductsListStateHolder
 import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
 import com.demo.ecommerapp.ui.theme.*
+import com.dokar.sonner.Toast
+import com.dokar.sonner.Toaster
+import com.dokar.sonner.ToasterState
 import com.dokar.sonner.rememberToasterState
 import ecommerapp.composeapp.resources.*
 import io.github.aakira.napier.Napier
@@ -24,14 +30,16 @@ import org.jetbrains.compose.resources.*
 
 @Composable
 fun HomeScreen(
-    viewModel: ProductsListViewModel,
+    productViewModel: ProductsListViewModel,
+    categoryViewModel: CategoriesListViewModel,
     navigator: Navigator,
     modifier: Modifier,
     onProductItemClick: (Long) -> Unit,
-    onSeeAllClick: () -> Unit
+    onSeeAllClick: () -> Unit,
 ) {
 
-    val uiState = viewModel.uiState.collectAsState()
+    val productUiState = productViewModel.uiState.collectAsState()
+    val categoryUiState = categoryViewModel.uiState.collectAsState()
     val context = LocalPlatformContext.current
     val toast = rememberToasterState()
     val scrollState = rememberScrollState()
@@ -70,10 +78,14 @@ fun HomeScreen(
                     }
                 }
             }
-        }
+        },
+        backgroundColor = backgroundColor
     ) { innerPadding ->
         LazyColumn(
-            modifier = modifier.padding(innerPadding).fillMaxSize().padding(bottom = 50.dp),
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(bottom = 50.dp),
             contentPadding = PaddingValues(
                 start = 10.dp,
                 end = 10.dp,
@@ -82,14 +94,21 @@ fun HomeScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            item { ProductCategoriesView() }
+            // product category list
+            item {
+                ProductCategoriesView(
+                    modifier = modifier,
+                    uiState = categoryUiState,
+                    toast = toast
+                )
+            }
 
             // recommended products
             item {
                 HomeProductView(
                     title = "Recommended",
                     modifier = modifier,
-                    uiState = uiState,
+                    uiState = productUiState,
                     onProductItemClick = onProductItemClick,
                     onSeeAllClick = onSeeAllClick
                 )
@@ -100,7 +119,7 @@ fun HomeScreen(
                 HomeProductView(
                     title = "Sale Products",
                     modifier = modifier,
-                    uiState = uiState,
+                    uiState = productUiState,
                     onProductItemClick = onProductItemClick,
                     onSeeAllClick = onSeeAllClick
                 )
@@ -112,7 +131,7 @@ fun HomeScreen(
 
 @Composable
 fun TopSection(
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -160,17 +179,64 @@ fun TopSection(
     }
 }
 
+
 @Composable
-fun ProductCategoriesView() {
-    Text(
-        text = "Product Categories",
-        fontSize = 16.sp,
-        color = primaryTextColor,
-        fontWeight = FontWeight.Bold,
-        fontFamily = productSansFamily(),
-        lineHeight = 18.sp
-    )
+fun ProductCategoriesView(
+    modifier: Modifier,
+    uiState: State<CategoriesListStateHolder>,
+    toast: ToasterState,
+) {
+    Column(modifier = modifier.fillMaxWidth().height(85.dp)) {
+        Text(
+            text = "Product Categories",
+            fontSize = 16.sp,
+            color = primaryTextColor,
+            fontWeight = FontWeight.Bold,
+            fontFamily = productSansFamily(),
+            lineHeight = 18.sp
+        )
+
+        Spacer(modifier = modifier.height(5.dp))
+
+        // categories
+        when {
+            // loading state
+            uiState.value.isLoading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            uiState.value.error.isNotEmpty() -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = uiState.value.error)
+                    Napier.e(tag = "HomeScreen", message = uiState.value.error)
+                }
+            }
+
+            else -> {
+                LazyHorizontalGrid(rows = GridCells.Fixed(1)) {
+                    uiState.value.data?.let { categoriesList ->
+                        items(categoriesList) {
+                            CategoryListView(
+                                category = it,
+                                onCategoryItemClick = { toast.show(it.categoryName) }
+                            )
+                            Toaster(state = toast)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 @Composable
 fun HomeProductView(
@@ -178,7 +244,7 @@ fun HomeProductView(
     modifier: Modifier,
     uiState: State<ProductsListStateHolder>,
     onProductItemClick: (Long) -> Unit,
-    onSeeAllClick: () -> Unit
+    onSeeAllClick: () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth().height(460.dp)) {
         // header

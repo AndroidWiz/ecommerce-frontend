@@ -34,6 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.SubcomposeAsyncImage
 import com.demo.ecommerapp.domain.model.Products
+import com.demo.ecommerapp.ui.theme.homeProductPriceTextColor
+import com.demo.ecommerapp.ui.theme.homeProductTitleTextColor
+import com.demo.ecommerapp.ui.theme.productSansFamily
 
 @Composable
 fun ProductsListView(
@@ -49,7 +52,8 @@ fun ProductsListView(
                 onProductItemClick()
             },
         shape = RoundedCornerShape(size = 8.dp),
-        backgroundColor = Color.LightGray,
+//        backgroundColor = Color.LightGray,
+        backgroundColor = Color.White,
         elevation = 3.dp,
         border = BorderStroke(
             width = 1.dp,
@@ -83,12 +87,14 @@ fun ProductsListView(
             // name
             Text(
                 text = product.name,
-                style = MaterialTheme.typography.body2,
+                color = homeProductTitleTextColor,
+                fontSize = 14.sp,
+                fontFamily = productSansFamily(),
                 fontWeight = FontWeight.Medium,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 textAlign = TextAlign.Center,
-                lineHeight = MaterialTheme.typography.body2.lineHeight
+                lineHeight = 14.sp
             )
             Spacer(modifier = Modifier.height(5.dp))
             Divider(modifier = Modifier.fillMaxWidth())
@@ -100,12 +106,12 @@ fun ProductsListView(
                 // price
                 Text(
                     text = "$ ${product.unitPrice}",
-                    color = Color.Magenta,
+                    color = homeProductPriceTextColor,
+                    fontFamily = productSansFamily(),
                     fontSize = 12.sp,
-                    style = MaterialTheme.typography.h6,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Justify,
-                    lineHeight = 12.sp
+                    lineHeight = 13.sp
                 )
 
                 IconButton(

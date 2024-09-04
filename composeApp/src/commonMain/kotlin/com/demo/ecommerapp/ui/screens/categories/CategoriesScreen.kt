@@ -6,8 +6,15 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.LocalPlatformContext
+import com.demo.ecommerapp.ui.components.CategoryListView
+import com.demo.ecommerapp.ui.theme.appBarTitleTextColor
+import com.demo.ecommerapp.ui.theme.backgroundColor
+import com.demo.ecommerapp.ui.theme.productSansFamily
 import com.dokar.sonner.*
 import io.github.aakira.napier.Napier
 import moe.tlaster.precompose.navigation.Navigator
@@ -31,13 +38,16 @@ fun CategoriesScreen(
                     Text(
                         text = "Categories List",
                         modifier = Modifier.fillMaxWidth(),
-                        color = Color.Black,
-                        style = MaterialTheme.typography.h6,
+                        color = appBarTitleTextColor,
+                        fontFamily = productSansFamily(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
                 }
             )
-        }
+        },
+        backgroundColor = backgroundColor
     ) {
 
         when {
@@ -62,10 +72,16 @@ fun CategoriesScreen(
             }
 
             else -> {
-                LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(1),
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                ) {
                     uiState.value.data?.let { categoriesList ->
                         items(categoriesList) {
-                            Text(text = it.categoryName)
+                            CategoryListView(
+                                category = it,
+                                onCategoryItemClick = { toast.show(it.categoryName) }
+                            )
 
                             Toaster(state = toast)
                         }

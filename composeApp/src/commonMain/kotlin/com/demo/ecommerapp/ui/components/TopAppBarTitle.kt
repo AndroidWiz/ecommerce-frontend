@@ -12,12 +12,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.demo.ecommerapp.ui.theme.appBarTitleTextColor
+import com.demo.ecommerapp.ui.theme.productSansFamily
 
 @Composable
 fun TopAppBarTitle(
@@ -29,7 +34,7 @@ fun TopAppBarTitle(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+            imageVector = Icons.AutoMirrored.Rounded.ArrowBackIos,
             contentDescription = "back arrow",
             modifier = Modifier.clickable { onBackClick() }
         )
@@ -37,8 +42,10 @@ fun TopAppBarTitle(
         Text(
             text = title,
             modifier = Modifier.fillMaxWidth(),
-            color = Color.Black,
-            style = MaterialTheme.typography.h6,
+            color = appBarTitleTextColor,
+            fontFamily = productSansFamily(),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
     }
