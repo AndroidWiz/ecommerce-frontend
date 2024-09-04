@@ -27,11 +27,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.demo.ecommerapp.ui.navigation.BottomNavigationRoute
+import com.demo.ecommerapp.ui.navigation.NavigationRoute
 import com.demo.ecommerapp.ui.screens.cart.CartScreen
 import com.demo.ecommerapp.ui.screens.categories.CategoriesScreen
+import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
 import com.demo.ecommerapp.ui.screens.profile.ProfileScreen
 import com.demo.ecommerapp.ui.theme.productSansFamily
 import com.demo.ecommerapp.ui.theme.selectedBottomNavColor
+import com.demo.ecommerapp.ui.theme.unselectedBottomNavColor
+import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
@@ -91,7 +95,7 @@ fun DashboardScreen(
                                     )
                                 },
                                 selectedContentColor = selectedBottomNavColor,
-                                unselectedContentColor = Color.Black
+                                unselectedContentColor = unselectedBottomNavColor
                             )
                         }
                     }
@@ -105,7 +109,15 @@ fun DashboardScreen(
                 // home screen
                 scene(route = BottomNavigationRoute.Home.route) {
                     currentRoute = BottomNavigationRoute.Home.route
-                    HomeScreen()
+                    val viewModel: ProductsListViewModel = koinViewModel(ProductsListViewModel::class)
+                    HomeScreen(
+                        viewModel = viewModel,
+                        navigator = navigator,
+                        onProductItemClick = {
+                            // navigate to product details screen
+                            navigator.navigate(NavigationRoute.ProductDetails.getRoute(id = it))
+                        }
+                    )
                 }
                 // categories screen
                 scene(route = BottomNavigationRoute.Categories.route) {
