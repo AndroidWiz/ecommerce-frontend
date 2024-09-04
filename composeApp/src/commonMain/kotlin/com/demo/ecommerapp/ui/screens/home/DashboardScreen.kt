@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.demo.ecommerapp.ui.navigation.BottomNavigationRoute
 import com.demo.ecommerapp.ui.navigation.NavigationRoute
 import com.demo.ecommerapp.ui.screens.cart.CartScreen
+import com.demo.ecommerapp.ui.screens.categories.CategoriesListViewModel
 import com.demo.ecommerapp.ui.screens.categories.CategoriesScreen
 import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
 import com.demo.ecommerapp.ui.screens.profile.ProfileScreen
@@ -113,16 +114,25 @@ fun DashboardScreen(
                     HomeScreen(
                         viewModel = viewModel,
                         navigator = navigator,
+                        modifier = Modifier,
                         onProductItemClick = {
                             // navigate to product details screen
                             navigator.navigate(NavigationRoute.ProductDetails.getRoute(id = it))
+                        },
+                        onSeeAllClick = {
+                            // navigate to all products list
+                            navigator.navigate(NavigationRoute.ProductsList.route)
                         }
                     )
                 }
                 // categories screen
                 scene(route = BottomNavigationRoute.Categories.route) {
                     currentRoute = BottomNavigationRoute.Categories.route
-                    CategoriesScreen()
+                    val viewModel: CategoriesListViewModel = koinViewModel(CategoriesListViewModel::class)
+                    CategoriesScreen(
+                        viewModel = viewModel,
+                        navigator = navigator
+                    )
                 }
                 // cart screen
                 scene(route = BottomNavigationRoute.Cart.route) {

@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import coil3.compose.LocalPlatformContext
 import com.demo.ecommerapp.ui.components.ProductsListView
+import com.demo.ecommerapp.ui.components.TopAppBarTitle
 import com.dokar.sonner.Toaster
 import com.dokar.sonner.rememberToasterState
 import io.github.aakira.napier.Napier
@@ -42,12 +43,9 @@ fun ProductsListScreen(
                 contentColor = Color.Black,
                 backgroundColor = Color.White,
                 content = {
-                    Text(
-                        text = "Products List",
-                        modifier = Modifier.fillMaxWidth(),
-                        color = Color.Black,
-                        style = MaterialTheme.typography.h6,
-                        textAlign = TextAlign.Center
+                    TopAppBarTitle(
+                        title = "Products List",
+                        onBackClick = { navigator.goBack() }
                     )
                 }
             )

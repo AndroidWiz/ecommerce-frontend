@@ -26,7 +26,9 @@ import org.jetbrains.compose.resources.*
 fun HomeScreen(
     viewModel: ProductsListViewModel,
     navigator: Navigator,
+    modifier: Modifier,
     onProductItemClick: (Long) -> Unit,
+    onSeeAllClick: () -> Unit
 ) {
 
     val uiState = viewModel.uiState.collectAsState()
@@ -37,23 +39,22 @@ fun HomeScreen(
     Scaffold(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
         topBar = {
-//            TopSection()
             TopAppBar(
-                modifier = Modifier
+                modifier = modifier
                     .height(55.dp),
                 backgroundColor = Color.White,
             ) {
                 Row(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxSize()
                         .padding(start = 6.dp, end = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    TopSection()
+                    TopSection(modifier = modifier)
                     IconButton(
                         onClick = { },
-                        modifier = Modifier
+                        modifier = modifier
                             .background(
                                 color = notiIconBgColor,
                                 shape = RoundedCornerShape(size = 10.dp)
@@ -63,7 +64,7 @@ fun HomeScreen(
                         Icon(
                             painter = painterResource(Res.drawable.notification),
                             contentDescription = "notification",
-                            modifier = Modifier.size(16.dp),
+                            modifier = modifier.size(16.dp),
                             tint = Color.Black
                         )
                     }
@@ -72,7 +73,7 @@ fun HomeScreen(
         }
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding).fillMaxSize().padding(bottom = 50.dp),
+            modifier = modifier.padding(innerPadding).fillMaxSize().padding(bottom = 50.dp),
             contentPadding = PaddingValues(
                 start = 10.dp,
                 end = 10.dp,
@@ -82,18 +83,26 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item { ProductCategoriesView() }
+
+            // recommended products
             item {
                 HomeProductView(
                     title = "Recommended",
+                    modifier = modifier,
                     uiState = uiState,
-                    onProductItemClick = onProductItemClick
+                    onProductItemClick = onProductItemClick,
+                    onSeeAllClick = onSeeAllClick
                 )
             }
+
+            // sale products
             item {
                 HomeProductView(
                     title = "Sale Products",
+                    modifier = modifier,
                     uiState = uiState,
-                    onProductItemClick = onProductItemClick
+                    onProductItemClick = onProductItemClick,
+                    onSeeAllClick = onSeeAllClick
                 )
             }
         }
@@ -102,7 +111,9 @@ fun HomeScreen(
 
 
 @Composable
-fun TopSection() {
+fun TopSection(
+    modifier: Modifier
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -111,21 +122,21 @@ fun TopSection() {
             model = Res.drawable.user_img,
             loading = {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
                 }
             },
             contentDescription = "user image",
-            modifier = Modifier.size(40.dp).clip(shape = CircleShape),
+            modifier = modifier.size(40.dp).clip(shape = CircleShape),
             contentScale = ContentScale.Crop
         )*/
 
         Image(
             painter = painterResource(Res.drawable.user_img),
             contentDescription = "user image",
-            modifier = Modifier.padding(end = 10.dp).size(40.dp)
+            modifier = modifier.padding(end = 10.dp).size(40.dp)
         )
 
         Column {
@@ -164,13 +175,15 @@ fun ProductCategoriesView() {
 @Composable
 fun HomeProductView(
     title: String,
+    modifier: Modifier,
     uiState: State<ProductsListStateHolder>,
     onProductItemClick: (Long) -> Unit,
+    onSeeAllClick: () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxWidth().height(460.dp)) {
+    Column(modifier = modifier.fillMaxWidth().height(460.dp)) {
         // header
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -189,16 +202,17 @@ fun HomeProductView(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "See all",
+                    modifier = modifier.clickable { onSeeAllClick() },
                     fontSize = 12.sp,
                     color = secondaryTextColor,
                     fontWeight = FontWeight.Light,
                     fontFamily = productSansFamily(),
                     lineHeight = 14.sp
                 )
-                Spacer(modifier = Modifier.width(5.dp))
+                Spacer(modifier = modifier.width(5.dp))
                 IconButton(
-                    onClick = { },
-                    modifier = Modifier
+                    onClick = { onSeeAllClick() },
+                    modifier = modifier
                         .background(
                             color = notiIconBgColor,
                             shape = CircleShape
@@ -208,21 +222,21 @@ fun HomeProductView(
                     Icon(
                         painter = painterResource(Res.drawable.right_arrow),
                         contentDescription = "right arrow",
-                        modifier = Modifier.size(8.dp),
+                        modifier = modifier.size(8.dp),
                         tint = Color.Black
                     )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = modifier.height(10.dp))
 
         // products
         when {
             // loading state
             uiState.value.isLoading -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -231,7 +245,7 @@ fun HomeProductView(
 
             uiState.value.error.isNotEmpty() -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = uiState.value.error)

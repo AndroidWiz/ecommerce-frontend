@@ -1,11 +1,13 @@
 package com.demo.ecommerapp.domain.mappers
 
-import com.demo.ecommerapp.data.model.*
+import com.demo.ecommerapp.data.model.ProductCategoryDTO
+import com.demo.ecommerapp.data.model.ProductsDTO
 import com.demo.ecommerapp.data.utils.Constants
+import com.demo.ecommerapp.domain.model.ProductCategory
 import com.demo.ecommerapp.domain.model.ProductDetails
 import com.demo.ecommerapp.domain.model.Products
 
-fun List<ProductsDTO>.toDomain(): List<Products> = map {
+fun List<ProductsDTO>.toProductsDomain(): List<Products> = map {
     Products(
         id = it.id,
         name = it.name,
@@ -14,7 +16,7 @@ fun List<ProductsDTO>.toDomain(): List<Products> = map {
     )
 }
 
-fun ProductsDTO.toDomain(): ProductDetails {
+fun ProductsDTO.toProductDetailsDomain(): ProductDetails {
     return ProductDetails(
         id = this.id,
         sku = this.sku,
@@ -24,5 +26,13 @@ fun ProductsDTO.toDomain(): ProductDetails {
         imageUrl = "${Constants.IMAGE_URL_PREFIX}${this.imageUrl}",
         active = this.active,
         unitsInStock = this.unitsInStock
+    )
+}
+
+fun List<ProductCategoryDTO>.toCategoriesDomain(): List<ProductCategory> = map {
+    ProductCategory(
+        id = it.id,
+        categoryName = it.categoryName,
+        products = it.products.toMutableList().toProductsDomain().toMutableSet()
     )
 }

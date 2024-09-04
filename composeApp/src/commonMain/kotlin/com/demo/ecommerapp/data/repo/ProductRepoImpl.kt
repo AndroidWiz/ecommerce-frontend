@@ -3,7 +3,8 @@ package com.demo.ecommerapp.data.repo
 import com.demo.ecommerapp.data.model.ProductsDTO
 import com.demo.ecommerapp.data.model.ProductsResponseDTO
 import com.demo.ecommerapp.data.utils.Constants
-import com.demo.ecommerapp.domain.mappers.toDomain
+import com.demo.ecommerapp.domain.mappers.toProductDetailsDomain
+import com.demo.ecommerapp.domain.mappers.toProductsDomain
 import com.demo.ecommerapp.domain.model.ProductDetails
 import com.demo.ecommerapp.domain.model.Products
 import com.demo.ecommerapp.domain.repo.ProductRepo
@@ -24,11 +25,11 @@ class ProductRepoImpl(private val httpClient: HttpClient) : ProductRepo {
             .body<ProductsResponseDTO>()
             ._embedded
             .products
-            .toDomain()
+            .toProductsDomain()
     }
 
     override suspend fun getProductDetails(id: Long): ProductDetails {
         return httpClient.get("${Constants.BASE_URL}/products/${id}").body<ProductsDTO>()
-            .toDomain()
+            .toProductDetailsDomain()
     }
 }
