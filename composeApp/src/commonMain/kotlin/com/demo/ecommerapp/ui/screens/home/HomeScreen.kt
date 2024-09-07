@@ -9,19 +9,15 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import coil3.compose.LocalPlatformContext
-import com.demo.ecommerapp.ui.components.CategoryListView
-import com.demo.ecommerapp.ui.components.ProductsListView
-import com.demo.ecommerapp.ui.screens.categories.CategoriesListStateHolder
-import com.demo.ecommerapp.ui.screens.categories.CategoriesListViewModel
-import com.demo.ecommerapp.ui.screens.products_list.ProductsListStateHolder
-import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
+import com.demo.ecommerapp.ui.components.*
+import com.demo.ecommerapp.ui.screens.categories.*
+import com.demo.ecommerapp.ui.screens.products_list.*
 import com.demo.ecommerapp.ui.theme.*
-import com.dokar.sonner.Toast
-import com.dokar.sonner.Toaster
-import com.dokar.sonner.ToasterState
+import com.dokar.sonner.*
 import com.dokar.sonner.rememberToasterState
 import ecommerapp.composeapp.resources.*
 import io.github.aakira.napier.Napier
@@ -42,7 +38,6 @@ fun HomeScreen(
     val categoryUiState = categoryViewModel.uiState.collectAsState()
     val context = LocalPlatformContext.current
     val toast = rememberToasterState()
-    val scrollState = rememberScrollState()
 
     Scaffold(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
@@ -65,7 +60,7 @@ fun HomeScreen(
                         modifier = modifier
                             .background(
                                 color = notiIconBgColor,
-                                shape = RoundedCornerShape(size = 10.dp)
+                                shape = RoundedCornerShape(size = 12.dp)
                             )
                             .size(34.dp)
                     ) {
@@ -94,6 +89,11 @@ fun HomeScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            // promotion
+            item {
+                PromotionView(modifier = modifier)
+            }
+
             // product category list
             item {
                 ProductCategoriesView(
@@ -174,6 +174,81 @@ fun TopSection(
                 fontWeight = FontWeight.Bold,
                 fontFamily = productSansFamily(),
                 lineHeight = 18.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun PromotionView(
+    modifier: Modifier,
+) {
+    Card(
+        modifier = modifier.fillMaxWidth().height(140.dp),
+        shape = RoundedCornerShape(size = 12.dp),
+        backgroundColor = promotionCardBgColor,
+        elevation = 5.dp
+    ) {
+        Row(
+            modifier = modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                modifier = modifier.fillMaxWidth(0.66f).fillMaxHeight()
+                    .padding(
+                        top = 16.dp,
+                        bottom = 16.dp,
+                        start = 16.dp,
+//                        end = 6.dp
+                    ),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Text(
+                    text = "Your one stop gadget place!",
+                    color = promotionTitleTextColor,
+                    fontFamily = productSansFamily(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    lineHeight = 20.sp
+                )
+                Text(
+                    text = "We offer the best products for you, nothing but sheer quality.",
+                    color = promotionDescTextColor,
+                    fontFamily = productSansFamily(),
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                    lineHeight = 12.sp
+                )
+                TextButton(
+                    onClick = {},
+                    modifier = modifier.width(150.dp),
+                    elevation = ButtonDefaults.elevation(3.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.textButtonColors(
+                        backgroundColor = Color.White,
+                        contentColor = promotionCardBgColor
+                    ),
+                ) {
+                    Text(
+                        text = "Shop Now",
+                        fontFamily = productSansFamily(),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            Image(
+                painter = painterResource(Res.drawable.promo_img),
+                contentDescription = "promo image",
+                modifier = modifier.fillMaxSize()
+                    .padding(
+                        top = 6.dp,
+                        bottom = 6.dp,
+                        end = 6.dp
+                    ),
+                contentScale = ContentScale.FillBounds
             )
         }
     }

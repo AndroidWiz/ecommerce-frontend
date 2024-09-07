@@ -1,25 +1,9 @@
 package com.demo.ecommerapp.ui.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.runtime.Composable
@@ -30,13 +14,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import coil3.compose.SubcomposeAsyncImage
 import com.demo.ecommerapp.domain.model.Products
-import com.demo.ecommerapp.ui.theme.homeProductPriceTextColor
-import com.demo.ecommerapp.ui.theme.homeProductTitleTextColor
-import com.demo.ecommerapp.ui.theme.productSansFamily
+import com.demo.ecommerapp.ui.theme.*
 
 @Composable
 fun ProductsListView(
@@ -51,12 +32,11 @@ fun ProductsListView(
             .clickable {
                 onProductItemClick()
             },
-        shape = RoundedCornerShape(size = 8.dp),
-//        backgroundColor = Color.LightGray,
+        shape = RoundedCornerShape(size = 12.dp),
         backgroundColor = Color.White,
         elevation = 3.dp,
         border = BorderStroke(
-            width = 1.dp,
+            width = 0.35.dp,
             color = Color.DarkGray
         )
     ) {
@@ -67,7 +47,8 @@ fun ProductsListView(
                     start = 10.dp,
                     end = 10.dp
                 )
-        ) {
+        )
+        {
             // image
             SubcomposeAsyncImage(
                 model = product.imageUrl,
@@ -87,7 +68,7 @@ fun ProductsListView(
             // name
             Text(
                 text = product.name,
-                color = homeProductTitleTextColor,
+                color = productTitleTextColor,
                 fontSize = 14.sp,
                 fontFamily = productSansFamily(),
                 fontWeight = FontWeight.Medium,
@@ -106,7 +87,7 @@ fun ProductsListView(
                 // price
                 Text(
                     text = "$ ${product.unitPrice}",
-                    color = homeProductPriceTextColor,
+                    color = productPriceTextColor,
                     fontFamily = productSansFamily(),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,

@@ -1,6 +1,7 @@
 package com.demo.ecommerapp.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.demo.ecommerapp.ui.screens.home.DashboardScreen
 import com.demo.ecommerapp.ui.screens.product_details.ProductDetailsScreen
 import com.demo.ecommerapp.ui.screens.product_details.ProductDetailsViewModel
@@ -39,7 +40,8 @@ fun AppNavigation() {
             viewModel.getProductDetails(id = id.toLong())
             ProductDetailsScreen(
                 viewModel = viewModel,
-                navigator = navigator
+                navigator = navigator,
+                modifier = Modifier
             )
         }
     }

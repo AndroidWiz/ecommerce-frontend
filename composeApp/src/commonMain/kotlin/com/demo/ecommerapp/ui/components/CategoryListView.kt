@@ -28,12 +28,11 @@ fun CategoryListView(
             .clickable {
                 onCategoryItemClick()
             },
-        shape = RoundedCornerShape(size = 8.dp),
+        shape = RoundedCornerShape(size = 12.dp),
         backgroundColor = Color.White,
-//        backgroundColor = Color.LightGray,
         elevation = 3.dp,
         border = BorderStroke(
-            width = 1.dp,
+            width = 0.35.dp,
             color = Color.DarkGray
         )
     ) {

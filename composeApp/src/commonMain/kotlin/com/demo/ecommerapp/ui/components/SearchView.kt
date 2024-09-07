@@ -37,7 +37,7 @@ fun SearchView() {
         leadingIcon = {
             Icon(painter = painterResource(Res.drawable.search), contentDescription = "Search")
         },
-        shape = RoundedCornerShape(size = 10.dp),
+        shape = RoundedCornerShape(size = 12.dp),
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent)
     )
 }

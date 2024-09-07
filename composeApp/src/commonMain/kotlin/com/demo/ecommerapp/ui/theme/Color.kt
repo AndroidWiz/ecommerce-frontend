@@ -11,7 +11,13 @@ val notiIconBgColor = Color(0xFFEEEEEE)
 
 val primaryTextColor = Color(0xFF000000)
 val secondaryTextColor = Color(0xFF70767D)
-val homeProductTitleTextColor = Color(0xFF090909)
-val homeProductPriceTextColor = Color(0xFFFFA14A)
+val productTitleTextColor = Color(0xFF090909)
+val productPriceTextColor = Color(0xFFFFA14A)
+val promotionTitleTextColor = Color(0xFFF8F8F8)
+val promotionDescTextColor = Color(0xFFEAEAEA)
 
 val appBarTitleTextColor = Color(0xFF090909)
+
+val promotionCardBgColor = Color(0xFFFFA14A)
+
+val buttonBgColor = Color(0xFFFFA14A)
