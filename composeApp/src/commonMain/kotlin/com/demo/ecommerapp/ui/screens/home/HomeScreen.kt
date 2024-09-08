@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -195,7 +196,7 @@ fun TopSection(
         Image(
             painter = painterResource(Res.drawable.user_img),
             contentDescription = "user image",
-            modifier = modifier.padding(end = 10.dp).size(40.dp)
+            modifier = modifier.padding(end = 10.dp).size(40.dp).clip(shape = CircleShape),
         )
 
         Column {

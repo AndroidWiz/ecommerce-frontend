@@ -1,10 +1,6 @@
 package com.demo.ecommerapp.ui.navigation
 
-import ecommerapp.composeapp.resources.Res
-import ecommerapp.composeapp.resources.cart
-import ecommerapp.composeapp.resources.categories
-import ecommerapp.composeapp.resources.home
-import ecommerapp.composeapp.resources.profile
+import ecommerapp.composeapp.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 
 sealed class BottomNavigationRoute(

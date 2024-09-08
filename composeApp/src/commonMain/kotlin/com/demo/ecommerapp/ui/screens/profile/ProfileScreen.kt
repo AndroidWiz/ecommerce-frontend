@@ -2,12 +2,14 @@ package com.demo.ecommerapp.ui.screens.profile
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForwardIos
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -53,14 +55,14 @@ fun ProfileScreen(
             Image(
                 painter = painterResource(Res.drawable.user_img),
                 contentDescription = "user image",
-                modifier = modifier.padding(end = 10.dp).size(100.dp)
+                modifier = modifier.padding(end = 10.dp).size(100.dp).clip(shape = CircleShape)
             )
 
             Spacer(modifier = modifier.height(10.dp))
             // user name
             Text(
                 text = "Kelvin Jones",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
                 color = primaryTextColor,
                 fontWeight = FontWeight.Bold,
                 fontFamily = productSansFamily(),
@@ -153,7 +155,7 @@ fun ProfileSectionsView(
                 color = profileSectionTitleTextColor,
                 fontFamily = productSansFamily(),
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
+                fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Start,
             )
 

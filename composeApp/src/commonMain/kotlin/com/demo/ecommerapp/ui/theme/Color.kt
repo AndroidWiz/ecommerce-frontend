@@ -2,6 +2,7 @@ package com.demo.ecommerapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+//#292D32
 val backgroundColor = Color(0xFFF8F8F8)
 
 val selectedBottomNavColor = Color(0xFFFFA14A)

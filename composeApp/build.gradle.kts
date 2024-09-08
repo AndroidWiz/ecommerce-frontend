@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
+    id("io.github.qamarelsafadi.kmp.app.icon.generator") version "1.2.6"
 }
 
 kotlin {
