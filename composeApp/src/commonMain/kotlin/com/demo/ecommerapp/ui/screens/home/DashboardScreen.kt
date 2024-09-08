@@ -39,7 +39,7 @@ fun DashboardScreen(
         Scaffold(
             contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
             bottomBar = {
-                Box(modifier = modifier.fillMaxWidth().height(60.dp)) {
+                Box(modifier = modifier.fillMaxWidth().height(55.dp)) {
                     NavigationBar(
                         modifier = modifier.fillMaxWidth(),
                         containerColor = Color.White
@@ -58,7 +58,7 @@ fun DashboardScreen(
                                     Icon(
                                         painter = painterResource(screen.icon),
                                         contentDescription = screen.label,
-                                        modifier = modifier.size(16.dp)
+                                        modifier = modifier.size(18.dp)
                                     )
                                 },
                                 label = {
@@ -68,10 +68,9 @@ fun DashboardScreen(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 10.sp,
                                         textAlign = TextAlign.Center,
-                                        lineHeight = 12.sp
+                                        lineHeight = 10.sp
                                     )
                                 },
-                                alwaysShowLabel = selectedIndex == index,
                                 colors = NavigationBarItemDefaults.colors(
                                     selectedIconColor = selectedBottomNavColor,
                                     selectedTextColor = selectedBottomNavColor,

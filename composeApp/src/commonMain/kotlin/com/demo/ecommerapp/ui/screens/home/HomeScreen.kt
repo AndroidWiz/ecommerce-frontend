@@ -24,6 +24,7 @@ import io.github.aakira.napier.Napier
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     productViewModel: ProductsListViewModel,
@@ -38,6 +39,9 @@ fun HomeScreen(
     val categoryUiState = categoryViewModel.uiState.collectAsState()
     val context = LocalPlatformContext.current
     val toast = rememberToasterState()
+
+    val searchText by productViewModel.searchText.collectAsState()
+    val isSearching by productViewModel.isSearching.collectAsState()
 
     Scaffold(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
@@ -92,14 +96,47 @@ fun HomeScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            // search view
+            item {
+//                SearchView(modifier = modifier)
+                SearchBar(
+                    query = searchText,
+                    onQueryChange = productViewModel::onSearchTextChange,
+                    onSearch = productViewModel::onSearchTextChange,
+                    active = isSearching,
+                    onActiveChange = {},
+                    modifier = modifier.fillMaxSize(),
+                    placeholder = {
+                        Text(
+                            text = "Search",
+                            color = secondaryTextColor,
+                            fontFamily = productSansFamily(),
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 16.sp,
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(Res.drawable.search),
+                            contentDescription = "Search"
+                        )
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    content = {}
+                )
+            }
+
             // promotion
             item {
-                PromotionView(modifier = modifier)
+                PromotionView(
+                    modifier = modifier,
+                    onShopNowClick = { onSeeAllClick() }
+                )
             }
 
             // product category list
             item {
-                ProductCategoriesView(
+                ProductCategoriesListView(
                     modifier = modifier,
                     uiState = categoryUiState,
                     toast = toast
@@ -182,9 +219,59 @@ fun TopSection(
     }
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchView(
+    modifier: Modifier,
+) {
+//    Row(
+//        modifier = modifier.fillMaxWidth().height(40.dp),
+//        verticalAlignment = Alignment.CenterVertically,
+//        horizontalArrangement = Arrangement.SpaceBetween
+//    ) {
+    SearchBar(
+        query = "Search",
+        onQueryChange = {},
+        onSearch = {},
+        active = false,
+        onActiveChange = {},
+        modifier = modifier.fillMaxSize(),
+        leadingIcon = {
+            Icon(
+                painter = painterResource(Res.drawable.search),
+                contentDescription = "Search"
+            )
+        },
+        shape = RoundedCornerShape(12.dp)
+    ) {
+
+    }
+//        IconButton(
+//            onClick = { },
+//            modifier = modifier
+//                .padding(top = 4.5.dp)
+//                .background(
+//                    color = buttonBgColor,
+//                    shape = RoundedCornerShape(size = 12.dp)
+//                )
+//                .size(40.dp)
+//        ) {
+//            Icon(
+//                painter = painterResource(Res.drawable.categories),
+//                contentDescription = "notification",
+//                modifier = modifier.size(20.dp),
+//                tint = Color.White
+//            )
+//        }
+//    }
+}
+
+
 @Composable
 fun PromotionView(
     modifier: Modifier,
+    onShopNowClick: () -> Unit,
 ) {
     Card(
         modifier = modifier.fillMaxWidth().height(140.dp),
@@ -224,7 +311,7 @@ fun PromotionView(
                     lineHeight = 12.sp
                 )
                 TextButton(
-                    onClick = {},
+                    onClick = { onShopNowClick() },
                     modifier = modifier.width(150.dp),
                     elevation = ButtonDefaults.buttonElevation(3.dp),
                     shape = RoundedCornerShape(12.dp),
@@ -259,7 +346,7 @@ fun PromotionView(
 
 
 @Composable
-fun ProductCategoriesView(
+fun ProductCategoriesListView(
     modifier: Modifier,
     uiState: State<CategoriesListStateHolder>,
     toast: ToasterState,

@@ -3,6 +3,8 @@ package com.demo.ecommerapp.ui.screens.product_details
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,6 +43,13 @@ fun ProductDetailsScreen(
                         textAlign = TextAlign.Center
                     )
                 },
+                navigationIcon = {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBackIos,
+                        contentDescription = "back arrow",
+                        modifier = Modifier.clickable { navigator.goBack() }
+                    )
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.White,
                     titleContentColor = appBarTitleTextColor
@@ -48,7 +57,7 @@ fun ProductDetailsScreen(
             )
         },
         containerColor = backgroundColor
-    ) {
+    ) { innerPadding ->
         when {
             // loading state
             uiState.value.isLoading -> {
@@ -79,7 +88,10 @@ fun ProductDetailsScreen(
 
             else -> {
                 Column(
-                    modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState())
+                    modifier = modifier
+                        .padding(innerPadding)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .padding(10.dp)
                 ) {
                     uiState.value.data?.let { productDetails ->

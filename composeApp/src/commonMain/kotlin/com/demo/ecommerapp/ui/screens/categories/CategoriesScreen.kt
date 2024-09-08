@@ -49,7 +49,7 @@ fun CategoriesScreen(
             )
         },
         containerColor = backgroundColor
-    ) {
+    ) { innerPadding ->
 
         when {
             // loading state
@@ -75,7 +75,8 @@ fun CategoriesScreen(
             else -> {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(1),
-                    modifier = modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                    modifier = modifier.padding(innerPadding).fillMaxSize()
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
                 ) {
                     uiState.value.data?.let { categoriesList ->
                         items(categoriesList) {
