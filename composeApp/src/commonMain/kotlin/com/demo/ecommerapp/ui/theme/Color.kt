@@ -21,3 +21,7 @@ val appBarTitleTextColor = Color(0xFF090909)
 val promotionCardBgColor = Color(0xFFFFA14A)
 
 val buttonBgColor = Color(0xFFFFA14A)
+val favButtonBgColor = Color(0xFFA14A33)
+
+val profileSectionTitleTextColor = Color(0xFF090909)
+val profileSectionIconBgColor = Color(0xFFF8F8F8)

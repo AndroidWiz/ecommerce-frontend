@@ -5,6 +5,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBackIos
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -56,6 +57,59 @@ fun ProductDetailsScreen(
                 )
             )
         },
+        bottomBar = {
+            Box(
+                modifier = modifier
+                    .padding(10.dp)
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // favourite button
+                    OutlinedIconButton(
+                        onClick = {},
+                        modifier = modifier.width(55.dp).width(42.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = IconButtonDefaults.outlinedIconButtonColors(
+                            containerColor = buttonBgColor.copy(alpha = 0.2f)
+                        ),
+                        border = BorderStroke(
+                            width = 1.dp,
+                            color = buttonBgColor
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Favorite,
+                            contentDescription = "favourite icon",
+                            modifier = modifier.size(20.dp),
+                            tint = backgroundColor
+                        )
+                    }
+                    // add to cart button
+                    TextButton(
+                        onClick = {},
+                        modifier = modifier.fillMaxWidth().height(42.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.textButtonColors(
+                            containerColor = buttonBgColor,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = "Add to cart",
+//                            modifier = modifier.padding(5.dp),
+                            fontSize = 12.sp,
+                            fontFamily = productSansFamily(),
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        },
         containerColor = backgroundColor
     ) { innerPadding ->
         when {
@@ -92,7 +146,7 @@ fun ProductDetailsScreen(
                         .padding(innerPadding)
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState())
-                        .padding(10.dp)
+                        .padding(horizontal = 10.dp)
                 ) {
                     uiState.value.data?.let { productDetails ->
                         Napier.d(tag = "ProductDetailsScreen", message = productDetails.toString())
@@ -170,27 +224,7 @@ fun ProductDetailsScreen(
                                 lineHeight = 14.sp
                             )
                         }
-                        Spacer(modifier = modifier.height(10.dp))
 
-                        // add to cart button
-                        TextButton(
-                            onClick = {},
-                            modifier = modifier.fillMaxWidth(),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.textButtonColors(
-                                containerColor = buttonBgColor,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Text(
-                                text = "Add to cart",
-                                modifier = modifier.padding(5.dp),
-                                fontSize = 12.sp,
-                                fontFamily = productSansFamily(),
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
-                            )
-                        }
                     }
                 }
             }

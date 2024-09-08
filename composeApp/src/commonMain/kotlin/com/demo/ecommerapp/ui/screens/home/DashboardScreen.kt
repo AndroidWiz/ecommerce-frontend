@@ -126,7 +126,10 @@ fun DashboardScreen(
                 // profile screen
                 scene(route = BottomNavigationRoute.Profile.route) {
                     currentRoute = BottomNavigationRoute.Profile.route
-                    ProfileScreen()
+                    ProfileScreen(
+                        modifier = Modifier,
+                        navigator = navigator
+                    )
                 }
             }
         }
