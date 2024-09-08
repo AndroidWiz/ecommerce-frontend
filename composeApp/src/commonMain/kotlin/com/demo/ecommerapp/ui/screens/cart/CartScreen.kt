@@ -1,6 +1,6 @@
 package com.demo.ecommerapp.ui.screens.cart
 
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 
 @Composable

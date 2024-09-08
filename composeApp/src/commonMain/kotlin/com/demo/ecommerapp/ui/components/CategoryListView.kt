@@ -3,17 +3,15 @@ package com.demo.ecommerapp.ui.components
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.*
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import com.demo.ecommerapp.domain.model.ProductCategory
-import com.demo.ecommerapp.ui.theme.primaryTextColor
-import com.demo.ecommerapp.ui.theme.productSansFamily
+import com.demo.ecommerapp.ui.theme.*
 
 @Composable
 fun CategoryListView(
@@ -29,8 +27,8 @@ fun CategoryListView(
                 onCategoryItemClick()
             },
         shape = RoundedCornerShape(size = 12.dp),
-        backgroundColor = Color.White,
-        elevation = 3.dp,
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(3.dp),
         border = BorderStroke(
             width = 0.35.dp,
             color = Color.DarkGray

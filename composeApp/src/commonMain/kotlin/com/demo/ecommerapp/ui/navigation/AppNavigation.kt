@@ -19,7 +19,8 @@ fun AppNavigation() {
         // dashboard screen
         scene(route = NavigationRoute.Dashboard.route) {
             DashboardScreen(
-                navigator = navigator
+                navigator = navigator,
+                modifier = Modifier
             )
         }
         // products list
@@ -27,7 +28,8 @@ fun AppNavigation() {
             val viewModel: ProductsListViewModel = koinViewModel(ProductsListViewModel::class)
             ProductsListScreen(
                 viewModel = viewModel,
-                navigator = navigator
+                navigator = navigator,
+                modifier = Modifier
             ) {
                 navigator.navigate(NavigationRoute.ProductDetails.getRoute(id = it))
             }

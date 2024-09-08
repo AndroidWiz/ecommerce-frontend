@@ -3,7 +3,7 @@ package com.demo.ecommerapp.ui.components
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.runtime.Composable
@@ -33,8 +33,8 @@ fun ProductsListView(
                 onProductItemClick()
             },
         shape = RoundedCornerShape(size = 12.dp),
-        backgroundColor = Color.White,
-        elevation = 3.dp,
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(3.dp),
         border = BorderStroke(
             width = 0.35.dp,
             color = Color.DarkGray
@@ -78,7 +78,7 @@ fun ProductsListView(
                 lineHeight = 14.sp
             )
             Spacer(modifier = Modifier.height(5.dp))
-            Divider(modifier = Modifier.fillMaxWidth())
+            HorizontalDivider(modifier = Modifier.fillMaxWidth())
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,

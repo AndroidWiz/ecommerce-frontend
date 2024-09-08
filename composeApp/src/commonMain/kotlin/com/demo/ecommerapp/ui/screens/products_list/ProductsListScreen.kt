@@ -1,35 +1,28 @@
 package com.demo.ecommerapp.ui.screens.products_list
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import coil3.compose.LocalPlatformContext
-import com.demo.ecommerapp.ui.components.ProductsListView
-import com.demo.ecommerapp.ui.components.TopAppBarTitle
-import com.dokar.sonner.Toaster
-import com.dokar.sonner.rememberToasterState
+import com.demo.ecommerapp.ui.components.*
+import com.demo.ecommerapp.ui.theme.appBarTitleTextColor
+import com.demo.ecommerapp.ui.theme.productSansFamily
+import com.dokar.sonner.*
 import io.github.aakira.napier.Napier
 import moe.tlaster.precompose.navigation.Navigator
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsListScreen(
     viewModel: ProductsListViewModel,
     navigator: Navigator,
+    modifier: Modifier,
     onProductItemClick: (Long) -> Unit,
 ) {
 
@@ -40,14 +33,21 @@ fun ProductsListScreen(
     Scaffold(contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
         topBar = {
             TopAppBar(
-                contentColor = Color.Black,
-                backgroundColor = Color.White,
-                content = {
-                    TopAppBarTitle(
-                        title = "Products List",
-                        onBackClick = { navigator.goBack() }
+                title = {
+                    Text(
+                        text = "Products List",
+                        modifier = modifier.fillMaxWidth(),
+                        color = appBarTitleTextColor,
+                        fontFamily = productSansFamily(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = appBarTitleTextColor
+                )
             )
         }
     ) {
@@ -56,7 +56,7 @@ fun ProductsListScreen(
             // loading state
             uiState.value.isLoading -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -65,7 +65,7 @@ fun ProductsListScreen(
 
             uiState.value.error.isNotEmpty() -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = uiState.value.error)

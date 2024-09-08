@@ -1,20 +1,10 @@
 package com.demo.ecommerapp
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import com.demo.ecommerapp.ui.navigation.AppNavigation
-import ecommerapp.composeapp.resources.Res
-import ecommerapp.composeapp.resources.compose_multiplatform
 import moe.tlaster.precompose.PreComposeApp
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 

@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.shape.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
@@ -42,10 +42,13 @@ fun HomeScreen(
     Scaffold(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
         topBar = {
-            TopAppBar(
-                modifier = modifier
-                    .height(55.dp),
-                backgroundColor = Color.White,
+//            TopAppBar(
+//                modifier = modifier
+//                    .height(55.dp),
+//                backgroundColor = Color.White,
+//            ) {
+            Box(
+                modifier = modifier.height(55.dp).background(color = Color.White),
             ) {
                 Row(
                     modifier = modifier
@@ -74,7 +77,7 @@ fun HomeScreen(
                 }
             }
         },
-        backgroundColor = backgroundColor
+        containerColor = backgroundColor
     ) { innerPadding ->
         LazyColumn(
             modifier = modifier
@@ -186,8 +189,8 @@ fun PromotionView(
     Card(
         modifier = modifier.fillMaxWidth().height(140.dp),
         shape = RoundedCornerShape(size = 12.dp),
-        backgroundColor = promotionCardBgColor,
-        elevation = 5.dp
+        colors = CardDefaults.cardColors(containerColor = promotionCardBgColor),
+        elevation = CardDefaults.cardElevation(5.dp),
     ) {
         Row(
             modifier = modifier.fillMaxSize(),
@@ -223,10 +226,10 @@ fun PromotionView(
                 TextButton(
                     onClick = {},
                     modifier = modifier.width(150.dp),
-                    elevation = ButtonDefaults.elevation(3.dp),
+                    elevation = ButtonDefaults.buttonElevation(3.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.textButtonColors(
-                        backgroundColor = Color.White,
+                        containerColor = Color.White,
                         contentColor = promotionCardBgColor
                     ),
                 ) {

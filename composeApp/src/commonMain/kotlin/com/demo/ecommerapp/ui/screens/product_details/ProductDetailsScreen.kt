@@ -1,29 +1,27 @@
 package com.demo.ecommerapp.ui.screens.product_details
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import coil3.compose.SubcomposeAsyncImage
-import com.demo.ecommerapp.ui.components.TopAppBarTitle
 import com.demo.ecommerapp.ui.theme.*
 import io.github.aakira.napier.Napier
 import moe.tlaster.precompose.navigation.Navigator
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailsScreen(
     viewModel: ProductDetailsViewModel,
     navigator: Navigator,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
 
     val uiState = viewModel.uiState.collectAsState()
@@ -32,16 +30,24 @@ fun ProductDetailsScreen(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
         topBar = {
             TopAppBar(
-                contentColor = Color.Black,
-                backgroundColor = Color.White
-            ) {
-                TopAppBarTitle(
-                    title = "Product Details",
-                    onBackClick = { navigator.goBack() }
+                title = {
+                    Text(
+                        text = "Product Details",
+                        modifier = modifier.fillMaxWidth(),
+                        color = appBarTitleTextColor,
+                        fontFamily = productSansFamily(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = appBarTitleTextColor
                 )
-            }
+            )
         },
-        backgroundColor = backgroundColor
+        containerColor = backgroundColor
     ) {
         when {
             // loading state
@@ -160,7 +166,7 @@ fun ProductDetailsScreen(
                             modifier = modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.textButtonColors(
-                                backgroundColor = buttonBgColor,
+                                containerColor = buttonBgColor,
                                 contentColor = Color.White
                             )
                         ) {

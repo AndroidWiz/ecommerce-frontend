@@ -2,27 +2,26 @@ package com.demo.ecommerapp.ui.screens.categories
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import coil3.compose.LocalPlatformContext
 import com.demo.ecommerapp.ui.components.CategoryListView
-import com.demo.ecommerapp.ui.theme.appBarTitleTextColor
-import com.demo.ecommerapp.ui.theme.backgroundColor
-import com.demo.ecommerapp.ui.theme.productSansFamily
+import com.demo.ecommerapp.ui.theme.*
 import com.dokar.sonner.*
 import io.github.aakira.napier.Napier
 import moe.tlaster.precompose.navigation.Navigator
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriesScreen(
     viewModel: CategoriesListViewModel,
     navigator: Navigator,
+    modifier: Modifier,
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val context = LocalPlatformContext.current
@@ -32,29 +31,31 @@ fun CategoriesScreen(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
         topBar = {
             TopAppBar(
-                contentColor = Color.Black,
-                backgroundColor = Color.White,
-                content = {
+                title = {
                     Text(
-                        text = "Categories List",
-                        modifier = Modifier.fillMaxWidth(),
+                        text = "Product Categories",
+                        modifier = modifier.fillMaxWidth(),
                         color = appBarTitleTextColor,
                         fontFamily = productSansFamily(),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = appBarTitleTextColor
+                )
             )
         },
-        backgroundColor = backgroundColor
+        containerColor = backgroundColor
     ) {
 
         when {
             // loading state
             uiState.value.isLoading -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -63,7 +64,7 @@ fun CategoriesScreen(
 
             uiState.value.error.isNotEmpty() -> {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = uiState.value.error)
@@ -74,7 +75,7 @@ fun CategoriesScreen(
             else -> {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(1),
-                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                    modifier = modifier.padding(horizontal = 10.dp, vertical = 5.dp)
                 ) {
                     uiState.value.data?.let { categoriesList ->
                         items(categoriesList) {

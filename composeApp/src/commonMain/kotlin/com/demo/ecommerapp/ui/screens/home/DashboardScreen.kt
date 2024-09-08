@@ -1,51 +1,27 @@
 package com.demo.ecommerapp.ui.screens.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Colors
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldDefaults
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.demo.ecommerapp.ui.navigation.BottomNavigationRoute
-import com.demo.ecommerapp.ui.navigation.NavigationRoute
+import androidx.compose.ui.unit.*
+import com.demo.ecommerapp.ui.navigation.*
 import com.demo.ecommerapp.ui.screens.cart.CartScreen
-import com.demo.ecommerapp.ui.screens.categories.CategoriesListViewModel
-import com.demo.ecommerapp.ui.screens.categories.CategoriesScreen
+import com.demo.ecommerapp.ui.screens.categories.*
 import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
 import com.demo.ecommerapp.ui.screens.profile.ProfileScreen
-import com.demo.ecommerapp.ui.theme.productSansFamily
-import com.demo.ecommerapp.ui.theme.selectedBottomNavColor
-import com.demo.ecommerapp.ui.theme.unselectedBottomNavColor
+import com.demo.ecommerapp.ui.theme.*
 import moe.tlaster.precompose.koin.koinViewModel
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.NavOptions
-import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.navigation.rememberNavigator
+import moe.tlaster.precompose.navigation.*
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun DashboardScreen(
     navigator: Navigator,
+    modifier: Modifier,
 ) {
 
     var selectedIndex by remember { mutableIntStateOf(0) }
@@ -59,17 +35,17 @@ fun DashboardScreen(
 
     var currentRoute by remember { mutableStateOf(BottomNavigationRoute.Home.route) }
 
-    Surface() {
+    Surface {
         Scaffold(
             contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
             bottomBar = {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    BottomNavigation(
-                        modifier = Modifier.fillMaxWidth(),
-                        backgroundColor = Color.White
+                Box(modifier = modifier.fillMaxWidth().height(60.dp)) {
+                    NavigationBar(
+                        modifier = modifier.fillMaxWidth(),
+                        containerColor = Color.White
                     ) {
                         bottomNavigationItems.forEachIndexed { index, screen ->
-                            BottomNavigationItem(
+                            NavigationBarItem(
                                 selected = selectedIndex == index,
                                 onClick = {
                                     selectedIndex = index
@@ -82,7 +58,7 @@ fun DashboardScreen(
                                     Icon(
                                         painter = painterResource(screen.icon),
                                         contentDescription = screen.label,
-                                        modifier = Modifier.size(16.dp)
+                                        modifier = modifier.size(16.dp)
                                     )
                                 },
                                 label = {
@@ -95,8 +71,14 @@ fun DashboardScreen(
                                         lineHeight = 12.sp
                                     )
                                 },
-                                selectedContentColor = selectedBottomNavColor,
-                                unselectedContentColor = unselectedBottomNavColor
+                                alwaysShowLabel = selectedIndex == index,
+                                colors = NavigationBarItemDefaults.colors(
+                                    selectedIconColor = selectedBottomNavColor,
+                                    selectedTextColor = selectedBottomNavColor,
+                                    unselectedIconColor = unselectedBottomNavColor,
+                                    unselectedTextColor = unselectedBottomNavColor,
+                                    indicatorColor = Color.Transparent
+                                )
                             )
                         }
                     }
@@ -133,7 +115,8 @@ fun DashboardScreen(
                     val viewModel: CategoriesListViewModel = koinViewModel(CategoriesListViewModel::class)
                     CategoriesScreen(
                         viewModel = viewModel,
-                        navigator = navigator
+                        navigator = navigator,
+                        modifier = Modifier
                     )
                 }
                 // cart screen
