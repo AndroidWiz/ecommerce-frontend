@@ -109,6 +109,10 @@ fun DashboardScreen(
                         onCategoryItemClick = {
                             // navigate to all products list
                             navigator.navigate(NavigationRoute.CategoryDetails.getRoute(id = it))
+                        },
+                        onNotificationClick = {
+                            // navigate to notification screen
+                            navigator.navigate(NavigationRoute.Notifications.route)
                         }
                     )
                 }
@@ -116,7 +120,7 @@ fun DashboardScreen(
                 scene(route = BottomNavigationRoute.Categories.route) {
                     currentRoute = BottomNavigationRoute.Categories.route
                     val viewModel: CategoriesListViewModel = koinViewModel(CategoriesListViewModel::class)
-                    CategoriesScreen(
+                    CategoriesListScreen(
                         viewModel = viewModel,
                         navigator = navigator,
                         modifier = Modifier,
@@ -129,7 +133,9 @@ fun DashboardScreen(
                 // cart screen
                 scene(route = BottomNavigationRoute.Cart.route) {
                     currentRoute = BottomNavigationRoute.Cart.route
-                    CartScreen()
+                    CartScreen(
+                        modifier = Modifier,
+                    )
                 }
                 // profile screen
                 scene(route = BottomNavigationRoute.Profile.route) {

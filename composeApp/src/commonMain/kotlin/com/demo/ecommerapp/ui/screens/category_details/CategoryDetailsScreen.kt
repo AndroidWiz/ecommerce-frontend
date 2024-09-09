@@ -58,7 +58,8 @@ fun CategoryDetailsScreen(
                     titleContentColor = appBarTitleTextColor
                 )
             )
-        }
+        },
+        containerColor = backgroundColor
     ) { innerPadding ->
         when {
             // loading state

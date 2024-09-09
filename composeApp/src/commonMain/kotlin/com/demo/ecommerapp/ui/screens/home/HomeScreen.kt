@@ -34,7 +34,8 @@ fun HomeScreen(
     modifier: Modifier,
     onProductItemClick: (Long) -> Unit,
     onSeeAllClick: () -> Unit,
-    onCategoryItemClick: (Long) -> Unit
+    onCategoryItemClick: (Long) -> Unit,
+    onNotificationClick: () -> Unit,
 ) {
 
     val productUiState = productViewModel.uiState.collectAsState()
@@ -59,7 +60,7 @@ fun HomeScreen(
                 ) {
                     TopSection(modifier = modifier)
                     IconButton(
-                        onClick = { },
+                        onClick = { onNotificationClick()},
                         modifier = modifier
                             .background(
                                 color = notiIconBgColor,

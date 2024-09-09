@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.*
 import com.demo.ecommerapp.ui.screens.category_details.CategoryDetailsScreen
 import com.demo.ecommerapp.ui.screens.category_details.CategoryDetailsViewModel
 import com.demo.ecommerapp.ui.screens.home.DashboardScreen
+import com.demo.ecommerapp.ui.screens.notification.NotificationListScreen
 import com.demo.ecommerapp.ui.screens.product_details.*
 import com.demo.ecommerapp.ui.screens.products_list.*
 import moe.tlaster.precompose.koin.koinViewModel
@@ -27,6 +28,7 @@ fun AppNavigation() {
                 modifier = Modifier
             )
         }
+
         // products list
         scene(route = NavigationRoute.ProductsList.route) {
             val viewModel: ProductsListViewModel = koinViewModel(ProductsListViewModel::class)
@@ -52,7 +54,7 @@ fun AppNavigation() {
         }
 
         // category details
-        scene(route = NavigationRoute.CategoryDetails.route){
+        scene(route = NavigationRoute.CategoryDetails.route) {
             val id = it.path.filter { categoryId -> categoryId.isDigit() }
             val viewModel: CategoryDetailsViewModel = koinViewModel(CategoryDetailsViewModel::class)
             viewModel.getProductsListByCategory(categoryId = id.toLong())
@@ -63,6 +65,14 @@ fun AppNavigation() {
                 onProductItemClick = {
                     navigator.navigate(NavigationRoute.ProductDetails.getRoute(id = it))
                 }
+            )
+        }
+
+        // notifications
+        scene(route = NavigationRoute.Notifications.route) {
+            NotificationListScreen(
+                navigator = navigator,
+                modifier = Modifier
             )
         }
     }
@@ -77,4 +87,5 @@ sealed class NavigationRoute(val route: String) {
     data object CategoryDetails : NavigationRoute("/category_details/{id}") {
         fun getRoute(id: Long) = "/category_details/${id}}"
     }
+    data object Notifications : NavigationRoute("/notifications")
 }

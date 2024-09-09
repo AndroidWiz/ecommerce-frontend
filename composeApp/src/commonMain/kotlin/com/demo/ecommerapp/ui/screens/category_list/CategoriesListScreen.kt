@@ -18,7 +18,7 @@ import moe.tlaster.precompose.navigation.Navigator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoriesScreen(
+fun CategoriesListScreen(
     viewModel: CategoriesListViewModel,
     navigator: Navigator,
     modifier: Modifier,
