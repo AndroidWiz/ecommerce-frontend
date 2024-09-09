@@ -1,21 +1,25 @@
 package com.demo.ecommerapp.ui.navigation
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.*
+import com.demo.ecommerapp.ui.screens.category_details.CategoryDetailsScreen
+import com.demo.ecommerapp.ui.screens.category_details.CategoryDetailsViewModel
 import com.demo.ecommerapp.ui.screens.home.DashboardScreen
-import com.demo.ecommerapp.ui.screens.product_details.ProductDetailsScreen
-import com.demo.ecommerapp.ui.screens.product_details.ProductDetailsViewModel
-import com.demo.ecommerapp.ui.screens.products_list.ProductsListScreen
-import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
+import com.demo.ecommerapp.ui.screens.product_details.*
+import com.demo.ecommerapp.ui.screens.products_list.*
 import moe.tlaster.precompose.koin.koinViewModel
-import moe.tlaster.precompose.navigation.NavHost
-import moe.tlaster.precompose.navigation.rememberNavigator
+import moe.tlaster.precompose.navigation.*
 
 @Composable
 fun AppNavigation() {
     val navigator = rememberNavigator()
 
-    NavHost(navigator = navigator, initialRoute = NavigationRoute.Dashboard.route) {
+    NavHost(
+        navigator = navigator,
+        initialRoute = NavigationRoute.Dashboard.route,
+        swipeProperties = SwipeProperties(spaceToSwipe = 15.dp)
+    ) {
         // dashboard screen
         scene(route = NavigationRoute.Dashboard.route) {
             DashboardScreen(
@@ -46,6 +50,21 @@ fun AppNavigation() {
                 modifier = Modifier
             )
         }
+
+        // category details
+        scene(route = NavigationRoute.CategoryDetails.route){
+            val id = it.path.filter { categoryId -> categoryId.isDigit() }
+            val viewModel: CategoryDetailsViewModel = koinViewModel(CategoryDetailsViewModel::class)
+            viewModel.getProductsListByCategory(categoryId = id.toLong())
+            CategoryDetailsScreen(
+                modifier = Modifier,
+                viewModel = viewModel,
+                navigator = navigator,
+                onProductItemClick = {
+                    navigator.navigate(NavigationRoute.ProductDetails.getRoute(id = it))
+                }
+            )
+        }
     }
 }
 
@@ -54,5 +73,8 @@ sealed class NavigationRoute(val route: String) {
     data object ProductsList : NavigationRoute("/products_list")
     data object ProductDetails : NavigationRoute("/product_details/{id}") {
         fun getRoute(id: Long) = "/product_details/${id}}"
+    }
+    data object CategoryDetails : NavigationRoute("/category_details/{id}") {
+        fun getRoute(id: Long) = "/category_details/${id}}"
     }
 }

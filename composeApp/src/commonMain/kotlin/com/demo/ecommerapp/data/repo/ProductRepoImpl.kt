@@ -20,8 +20,8 @@ class ProductRepoImpl(private val httpClient: HttpClient) : ProductRepo {
     }*/
 
     override suspend fun getProducts(): List<Products> {
-        return httpClient.get("${Constants.BASE_URL}/products")
-//        return httpClient.get("${Constants.BASE_URL}/products?size=100")
+//        return httpClient.get("${Constants.BASE_URL}/products")
+        return httpClient.get("${Constants.BASE_URL}/products?size=100")
             .body<ProductsResponseDTO>()
             ._embedded
             .products
@@ -31,5 +31,13 @@ class ProductRepoImpl(private val httpClient: HttpClient) : ProductRepo {
     override suspend fun getProductDetails(id: Long): ProductDetails {
         return httpClient.get("${Constants.BASE_URL}/products/${id}").body<ProductsDTO>()
             .toProductDetailsDomain()
+    }
+
+    override suspend fun getProductsByCategoryId(id: Long): List<Products> {
+        return httpClient.get("${Constants.BASE_URL}/products/search/findByCategoryId?id=${id}")
+            .body<ProductsResponseDTO>()
+            ._embedded
+            .products
+            .toProductsDomain()
     }
 }

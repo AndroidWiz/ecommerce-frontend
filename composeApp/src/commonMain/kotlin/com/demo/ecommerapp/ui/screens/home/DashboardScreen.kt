@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import com.demo.ecommerapp.ui.navigation.*
 import com.demo.ecommerapp.ui.screens.cart.CartScreen
-import com.demo.ecommerapp.ui.screens.categories.*
+import com.demo.ecommerapp.ui.screens.category_list.*
 import com.demo.ecommerapp.ui.screens.products_list.ProductsListViewModel
 import com.demo.ecommerapp.ui.screens.profile.ProfileScreen
 import com.demo.ecommerapp.ui.theme.*
@@ -105,6 +105,10 @@ fun DashboardScreen(
                         onSeeAllClick = {
                             // navigate to all products list
                             navigator.navigate(NavigationRoute.ProductsList.route)
+                        },
+                        onCategoryItemClick = {
+                            // navigate to all products list
+                            navigator.navigate(NavigationRoute.CategoryDetails.getRoute(id = it))
                         }
                     )
                 }
@@ -115,7 +119,11 @@ fun DashboardScreen(
                     CategoriesScreen(
                         viewModel = viewModel,
                         navigator = navigator,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        onCategoryItemClick = {
+                            // navigate to all products list
+                            navigator.navigate(NavigationRoute.CategoryDetails.getRoute(id = it))
+                        }
                     )
                 }
                 // cart screen

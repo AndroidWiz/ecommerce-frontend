@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import coil3.compose.LocalPlatformContext
 import com.demo.ecommerapp.ui.components.*
-import com.demo.ecommerapp.ui.screens.categories.*
+import com.demo.ecommerapp.ui.screens.category_list.*
 import com.demo.ecommerapp.ui.screens.products_list.*
 import com.demo.ecommerapp.ui.theme.*
 import com.dokar.sonner.*
@@ -34,11 +34,11 @@ fun HomeScreen(
     modifier: Modifier,
     onProductItemClick: (Long) -> Unit,
     onSeeAllClick: () -> Unit,
+    onCategoryItemClick: (Long) -> Unit
 ) {
 
     val productUiState = productViewModel.uiState.collectAsState()
     val categoryUiState = categoryViewModel.uiState.collectAsState()
-    val context = LocalPlatformContext.current
     val toast = rememberToasterState()
 
     val searchText by productViewModel.searchText.collectAsState()
@@ -47,18 +47,13 @@ fun HomeScreen(
     Scaffold(
         contentWindowInsets = ScaffoldDefaults.contentWindowInsets,
         topBar = {
-//            TopAppBar(
-//                modifier = modifier
-//                    .height(55.dp),
-//                backgroundColor = Color.White,
-//            ) {
             Box(
                 modifier = modifier.height(55.dp).background(color = Color.White),
             ) {
                 Row(
                     modifier = modifier
                         .fillMaxSize()
-                        .padding(start = 6.dp, end = 6.dp),
+                        .padding(horizontal = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -119,7 +114,8 @@ fun HomeScreen(
                     leadingIcon = {
                         Icon(
                             painter = painterResource(Res.drawable.search),
-                            contentDescription = "Search"
+                            contentDescription = "Search",
+                            tint = secondaryTextColor
                         )
                     },
                     shape = RoundedCornerShape(12.dp),
@@ -140,7 +136,8 @@ fun HomeScreen(
                 ProductCategoriesListView(
                     modifier = modifier,
                     uiState = categoryUiState,
-                    toast = toast
+                    toast = toast,
+                    onCategoryItemClick = onCategoryItemClick
                 )
             }
 
@@ -351,6 +348,7 @@ fun ProductCategoriesListView(
     modifier: Modifier,
     uiState: State<CategoriesListStateHolder>,
     toast: ToasterState,
+    onCategoryItemClick: (Long) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth().height(85.dp)) {
         Text(
@@ -392,7 +390,7 @@ fun ProductCategoriesListView(
                         items(categoriesList) {
                             CategoryListView(
                                 category = it,
-                                onCategoryItemClick = { toast.show(it.categoryName) }
+                                onCategoryItemClick = { onCategoryItemClick(it.id) }
                             )
                             Toaster(state = toast)
                         }

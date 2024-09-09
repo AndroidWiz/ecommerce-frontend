@@ -7,4 +7,5 @@ val domainModule = module {
     factory { GetProductsListUseCase() }
     factory { GetProductDetailsUseCase() }
     factory { GetCategoryListUseCase() }
+    factory { GetProductsListByCategoryUseCase() }
 }

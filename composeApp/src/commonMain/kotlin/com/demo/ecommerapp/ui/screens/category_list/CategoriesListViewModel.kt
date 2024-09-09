@@ -1,4 +1,4 @@
-package com.demo.ecommerapp.ui.screens.categories
+package com.demo.ecommerapp.ui.screens.category_list
 
 import com.demo.ecommerapp.data.utils.NetworkResult
 import com.demo.ecommerapp.domain.model.ProductCategory
