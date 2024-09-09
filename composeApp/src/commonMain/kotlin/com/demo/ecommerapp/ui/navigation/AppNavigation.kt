@@ -3,6 +3,7 @@ package com.demo.ecommerapp.ui.navigation
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
+import com.demo.ecommerapp.ui.screens.auth.LoginScreen
 import com.demo.ecommerapp.ui.screens.category_details.CategoryDetailsScreen
 import com.demo.ecommerapp.ui.screens.category_details.CategoryDetailsViewModel
 import com.demo.ecommerapp.ui.screens.home.DashboardScreen
@@ -18,9 +19,21 @@ fun AppNavigation() {
 
     NavHost(
         navigator = navigator,
-        initialRoute = NavigationRoute.Dashboard.route,
+        initialRoute = NavigationRoute.Login.route,
         swipeProperties = SwipeProperties(spaceToSwipe = 15.dp)
     ) {
+        // login screen
+        scene(route = NavigationRoute.Login.route) {
+            LoginScreen(
+                modifier = Modifier,
+                navigator = navigator,
+                onLoginClick = {
+                    // navigate to dashboard screen
+                    navigator.navigate(NavigationRoute.Dashboard.route)
+                }
+            )
+        }
+
         // dashboard screen
         scene(route = NavigationRoute.Dashboard.route) {
             DashboardScreen(
@@ -79,6 +92,7 @@ fun AppNavigation() {
 }
 
 sealed class NavigationRoute(val route: String) {
+    data object Login : NavigationRoute("/login")
     data object Dashboard : NavigationRoute("/dashboard")
     data object ProductsList : NavigationRoute("/products_list")
     data object ProductDetails : NavigationRoute("/product_details/{id}") {
