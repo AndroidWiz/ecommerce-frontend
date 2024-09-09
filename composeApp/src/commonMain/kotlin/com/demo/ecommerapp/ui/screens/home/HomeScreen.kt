@@ -323,7 +323,8 @@ fun PromotionView(
                         text = "Shop Now",
                         fontFamily = productSansFamily(),
                         fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = 12.sp
                     )
                 }
             }

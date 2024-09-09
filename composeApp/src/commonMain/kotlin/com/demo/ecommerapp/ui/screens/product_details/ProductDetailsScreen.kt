@@ -104,7 +104,8 @@ fun ProductDetailsScreen(
                             fontSize = 12.sp,
                             fontFamily = productSansFamily(),
                             fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            lineHeight = 12.sp
                         )
                     }
                 }
