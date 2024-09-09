@@ -31,7 +31,7 @@ fun CategoryListView(
         elevation = CardDefaults.cardElevation(3.dp),
         border = BorderStroke(
             width = 0.35.dp,
-            color = Color.DarkGray
+            color = cardBorderColor
         )
     ) {
         // name

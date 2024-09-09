@@ -28,7 +28,8 @@ fun ProductsListView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)
-            .height(200.dp)
+//            .height(200.dp)
+            .wrapContentHeight()
             .clickable {
                 onProductItemClick()
             },
@@ -37,7 +38,7 @@ fun ProductsListView(
         elevation = CardDefaults.cardElevation(3.dp),
         border = BorderStroke(
             width = 0.35.dp,
-            color = Color.DarkGray
+            color = cardBorderColor
         )
     ) {
         Column(
@@ -61,7 +62,8 @@ fun ProductsListView(
                     }
                 },
                 contentDescription = "product image",
-                modifier = Modifier.fillMaxWidth().height(140.dp),
+//                modifier = Modifier.fillMaxWidth().height(140.dp),
+                clipToBounds = false,
                 contentScale = ContentScale.Fit,
             )
 
@@ -77,34 +79,49 @@ fun ProductsListView(
                 textAlign = TextAlign.Center,
                 lineHeight = 14.sp
             )
-            Spacer(modifier = Modifier.height(5.dp))
-            HorizontalDivider(modifier = Modifier.fillMaxWidth())
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // price
-                Text(
-                    text = "$ ${product.unitPrice}",
-                    color = productPriceTextColor,
-                    fontFamily = productSansFamily(),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.Justify,
-                    lineHeight = 13.sp
-                )
+//            Spacer(modifier = Modifier.height(5.dp))
+//            HorizontalDivider(
+//                modifier = Modifier.fillMaxWidth(),
+//                thickness = 0.35.dp,
+//                color = cardBorderColor
+//            )
 
-                IconButton(
-                    onClick = {}
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.ShoppingCart,
-                        contentDescription = "Add to cart",
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-            }
+            // price
+            Text(
+                text = "$ ${product.unitPrice}",
+                color = productPriceTextColor,
+                fontFamily = productSansFamily(),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Justify,
+//                lineHeight = 13.sp
+            )
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                // price
+//                Text(
+//                    text = "$ ${product.unitPrice}",
+//                    color = productPriceTextColor,
+//                    fontFamily = productSansFamily(),
+//                    fontSize = 12.sp,
+//                    fontWeight = FontWeight.Medium,
+//                    textAlign = TextAlign.Justify,
+//                    lineHeight = 13.sp
+//                )
+//
+//                IconButton(
+//                    onClick = {}
+//                ) {
+//                    Icon(
+//                        imageVector = Icons.Rounded.ShoppingCart,
+//                        contentDescription = "Add to cart",
+//                        modifier = Modifier.size(18.dp)
+//                    )
+//                }
+//            }
         }
     }
 }
